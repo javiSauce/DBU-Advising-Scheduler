@@ -13,7 +13,19 @@ namespace DBU_Advising_Scheduler.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var events = await GraphHelper.GetEventsAsync();
+
+            var graphClient = GraphHelper.GetAuthenticatedClient();
+
+            string id = await GraphHelper.GetCoursesCalendarId();
+
+            var events = await graphClient.Me.Calendars[id].Events.Request()
+    .Select("subject,organizer,start,end")
+    .OrderBy("createdDateTime DESC")
+    .GetAsync();
+            //var events = await graphClient.Me.Calendars["Courses"].Events.Request()
+            //    .Select("subject,organizer,start,end")
+            //    .OrderBy("createdDateTime DESC")
+            //    .GetAsync();
 
             // Change start and end dates from UTC to local time
             foreach (var ev in events)
@@ -94,9 +106,11 @@ namespace DBU_Advising_Scheduler.Controllers
 
             GraphServiceClient graphClient = GraphHelper.GetAuthenticatedClient();
 
+            string id = await GraphHelper.GetCoursesCalendarId();
+
             foreach (var ev in events)
             {
-                await graphClient.Me.Events
+                await graphClient.Me.Calendars[id].Events
                     .Request()
                     .AddAsync(ev);
             }
