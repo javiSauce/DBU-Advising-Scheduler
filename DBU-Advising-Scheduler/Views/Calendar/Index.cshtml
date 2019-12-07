@@ -7,7 +7,7 @@
 <h1>Calendar</h1>
 <table class="table">
     <thead>
-        <tr>
+        <tr class="header">
             <th scope="col">Organizer</th>
             <th scope="col">Subject</th>
             <th scope="col">Start</th>
@@ -22,7 +22,40 @@
                 <td>@item.Subject</td>
                 <td>@Convert.ToDateTime(item.Start.DateTime).ToString("M/d/yy h:mm tt")</td>
                 <td>@Convert.ToDateTime(item.End.DateTime).ToString("M/d/yy h:mm tt")</td>
+                <td class="hidden">@item.Id</td>
             </tr>
         }
     </tbody>
 </table>
+<input type="button" value="Delete" onclick="deleteEvents()" />
+<input type="button" value="Delete All" onclick="deleteAllEvents()" />
+
+@using (Html.BeginForm("DeleteEvents", "Calendar", FormMethod.Post,new { id="deleteForm" }))
+{
+    @Html.TextBox("eventIds");
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+    $('td').click(function () {
+        $(this).parent().toggleClass('selected');
+    });
+
+    function deleteEvents() {
+        $("[name='eventIds']").val('');
+        $('.selected > .hidden').each(function () {
+            $("[name='eventIds']").val($("[name='eventIds']").val() + ','+ $(this).text());
+        });
+
+        $("#deleteForm").submit();
+    }
+
+    function deleteAllEvents() {
+        $("[name='eventIds']").val('');
+        $('tr > .hidden').each(function () {
+            $("[name='eventIds']").val($("[name='eventIds']").val() + ','+ $(this).text());
+        });
+
+        $("#deleteForm").submit();
+    }
+</script>

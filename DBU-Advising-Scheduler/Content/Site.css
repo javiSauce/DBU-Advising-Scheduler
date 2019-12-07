@@ -11,3 +11,16 @@
 .jumbotron {
     padding: 1rem;
 }
+
+
+tr:not(.selected):not(.header):hover {
+    background: #969292;
+}
+
+.selected {
+    background: #4088ff;
+}
+
+.hidden {
+    display: none;
+}

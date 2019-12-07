@@ -31,7 +31,7 @@ namespace DBU_Advising_Scheduler.Helpers
             return events.CurrentPage;
         }
 
-        private static GraphServiceClient GetAuthenticatedClient()
+        public static GraphServiceClient GetAuthenticatedClient()
         {
             return new GraphServiceClient(
                 new DelegateAuthenticationProvider(
