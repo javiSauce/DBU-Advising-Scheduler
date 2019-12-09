@@ -8,20 +8,41 @@
 <table class="table">
     <thead>
         <tr class="header">
-            <th scope="col">Organizer</th>
-            <th scope="col">Subject</th>
-            <th scope="col">Start</th>
-            <th scope="col">End</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Course Type</th>
+            <th scope="col">Days</th>
+            <th scope="col">Times</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Location</th>
+            <th scope="col">Professor</th>
+            <th scope="col">Notes</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Organizer.EmailAddress.Name</td>
                 <td>@item.Subject</td>
-                <td>@Convert.ToDateTime(item.Start.DateTime).ToString("M/d/yy h:mm tt")</td>
-                <td>@Convert.ToDateTime(item.End.DateTime).ToString("M/d/yy h:mm tt")</td>
+                <td>@item.Categories.ToList().First()</td>
+                @{
+                    string days = "";
+                    item.Recurrence.Pattern.DaysOfWeek.ToList().ForEach(x => days = days + x + ",");
+                    days = days.Remove(days.Length - 1);
+
+                    string notes = @item.Body.Content.ToString();
+                    int start = notes.IndexOf("PlainText") + 11;
+                    int len = notes.IndexOf("</div>",start) - start;
+                    notes = notes.Substring(start,len);
+                }
+                <td>@days</td>
+                <td>@Convert.ToDateTime(item.Start.DateTime).ToString("h:mm tt") - @Convert.ToDateTime(item.End.DateTime).ToString("h:mm tt")</td>
+                <td>@item.Recurrence.Range.StartDate.ToString()</td>
+                <td>@item.Recurrence.Range.EndDate.ToString()</td>
+                <td>@item.Location.DisplayName</td>
+                <td>@item.Attendees.ToList().First().EmailAddress.Name</td>
+
+                <td>@notes</td>
                 <td class="hidden">@item.Id</td>
             </tr>
         }
