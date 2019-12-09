@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Security.Claims;
 using System.Web.Mvc;
+using DBU_Advising_Scheduler.TokenStorage;
+
 
 namespace DBU_Advising_Scheduler.Controllers
 {
@@ -10,6 +13,11 @@ namespace DBU_Advising_Scheduler.Controllers
     {
         public ActionResult Index()
         {
+            //var tokenStore = new SessionTokenStore(null,
+            //        System.Web.HttpContext.Current, ClaimsPrincipal.Current);
+
+            //ViewBag.Message = tokenStore.GetUserDetails();
+
             return View();
         }
 

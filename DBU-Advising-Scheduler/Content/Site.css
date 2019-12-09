@@ -7,3 +7,7 @@
     word-break: break-all;
     white-space: pre-wrap;
 }
+
+.jumbotron {
+    padding: 1rem;
+}

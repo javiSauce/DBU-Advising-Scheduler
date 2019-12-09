@@ -9,7 +9,7 @@ using DBU_Advising_Scheduler.TokenStorage;
 
 namespace DBU_Advising_Scheduler.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public void SignIn()
         {

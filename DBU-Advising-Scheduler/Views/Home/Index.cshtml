@@ -2,16 +2,19 @@
     ViewBag.Current = "Home";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET Graph Tutorial</h1>
-    <p class="lead">This sample app shows how to use the Microsoft Graph API to access Outlook and OneDrive data from ASP.NET</p>
-    @if (Request.IsAuthenticated)
-    {
-        <h4>Welcome @ViewBag.User.DisplayName!</h4>
-        <p>Use the navigation bar at the top of the page to get started.</p>
-    }
-    else
-    {
-        @Html.ActionLink("Click here to sign in", "SignIn", "Account", new { area = "" }, new { @class = "btn btn-primary btn-large" })
-    }
-</div>
+    <div class="jumbotron">
+        <h1>Course Listing</h1>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="welcome">
+                <h4>Welcome @ViewBag.User.DisplayName!</h4>
+                <p class="lead">Choose courses to add to your schedule below.</p>
+                <p>Use the navigation bar at the top of the page to view your schedule.</p>
+            </div>
+        }
+        else
+        {
+            <p class="lead">Browse the course listings below.<br>Sign in to change your schedule.</p>
+            @Html.ActionLink("Click here to sign in", "SignIn", "Account", new { area = "" }, new { @class = "btn btn-primary btn-large" })
+        }
+    </div>

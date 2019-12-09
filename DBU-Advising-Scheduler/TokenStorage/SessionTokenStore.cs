@@ -95,7 +95,6 @@ namespace DBU_Advising_Scheduler.TokenStorage
 
         public void SaveUserDetails(CachedUser user)
         {
-
             sessionLock.EnterWriteLock();
             httpContext.Session[userCacheKey] = JsonConvert.SerializeObject(user);
             sessionLock.ExitWriteLock();

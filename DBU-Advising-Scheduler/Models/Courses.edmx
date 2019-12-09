@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbuasModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.dbuas.courses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="courses">
+          <Key>
+            <PropertyRef Name="Reporting Term" />
+            <PropertyRef Name="Term" />
+            <PropertyRef Name="Course Name" />
+            <PropertyRef Name="Course" />
+            <PropertyRef Name="Section" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="Division Desc" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="Department Description" />
+            <PropertyRef Name="Current Status" />
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="Building" />
+            <PropertyRef Name="Room" />
+            <PropertyRef Name="Start Date" />
+            <PropertyRef Name="End Date" />
+            <PropertyRef Name="Days" />
+            <PropertyRef Name="Start Time" />
+            <PropertyRef Name="End Time" />
+            <PropertyRef Name="Section Capacity" />
+            <PropertyRef Name="Faculty First Name" />
+            <PropertyRef Name="Faculty Last Name" />
+            <PropertyRef Name="Notes" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Start Datetime" />
+            <PropertyRef Name="End Datetime" />
+          </Key>
+          <Property Name="Reporting Term" Type="text" Nullable="false" />
+          <Property Name="Term" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Course Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Course" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Section" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Division Desc" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Department Description" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Current Status" Type="text" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Building" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Room" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Start Date" Type="date" Nullable="false" />
+          <Property Name="End Date" Type="date" Nullable="false" />
+          <Property Name="Days" Type="text" Nullable="false" />
+          <Property Name="Start Time" Type="time" Precision="0" Nullable="false" />
+          <Property Name="End Time" Type="time" Precision="0" Nullable="false" />
+          <Property Name="Section Capacity" Type="int" Nullable="false" />
+          <Property Name="Faculty First Name" Type="text" Nullable="false" />
+          <Property Name="Faculty Last Name" Type="text" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Year" Type="year" Nullable="false" />
+          <Property Name="Start Datetime" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="End Datetime" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dbuasModelStoreContainer">
+          <EntitySet Name="courses" EntityType="Self.courses" store:Type="Tables" store:Schema="dbuas">
+            <DefiningQuery>SELECT
+`courses`.`Reporting Term`, 
+`courses`.`Term`, 
+`courses`.`Course Name`, 
+`courses`.`Course`, 
+`courses`.`Section`, 
+`courses`.`Title`, 
+`courses`.`Division Desc`, 
+`courses`.`Department`, 
+`courses`.`Department Description`, 
+`courses`.`Current Status`, 
+`courses`.`Location`, 
+`courses`.`Building`, 
+`courses`.`Room`, 
+`courses`.`Start Date`, 
+`courses`.`End Date`, 
+`courses`.`Days`, 
+`courses`.`Start Time`, 
+`courses`.`End Time`, 
+`courses`.`Section Capacity`, 
+`courses`.`Faculty First Name`, 
+`courses`.`Faculty Last Name`, 
+`courses`.`Notes`, 
+`courses`.`Year`, 
+`courses`.`Start Datetime`, 
+`courses`.`End Datetime`
+FROM `courses` AS `courses`</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbuasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cours">
+          <Key>
+            <PropertyRef Name="Reporting_Term" />
+            <PropertyRef Name="Term" />
+            <PropertyRef Name="Course_Name" />
+            <PropertyRef Name="Course" />
+            <PropertyRef Name="Section" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="Division_Desc" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="Department_Description" />
+            <PropertyRef Name="Current_Status" />
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="Building" />
+            <PropertyRef Name="Room" />
+            <PropertyRef Name="Start_Date" />
+            <PropertyRef Name="End_Date" />
+            <PropertyRef Name="Days" />
+            <PropertyRef Name="Start_Time" />
+            <PropertyRef Name="End_Time" />
+            <PropertyRef Name="Section_Capacity" />
+            <PropertyRef Name="Faculty_First_Name" />
+            <PropertyRef Name="Faculty_Last_Name" />
+            <PropertyRef Name="Notes" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Start_Datetime" />
+            <PropertyRef Name="End_Datetime" />
+          </Key>
+          <Property Name="Reporting_Term" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Term" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Course_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Course" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Section" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Division_Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department_Description" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Current_Status" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Building" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Room" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Start_Date" Type="DateTime" Nullable="false" />
+          <Property Name="End_Date" Type="DateTime" Nullable="false" />
+          <Property Name="Days" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Start_Time" Type="Time" Nullable="false" />
+          <Property Name="End_Time" Type="Time" Nullable="false" />
+          <Property Name="Section_Capacity" Type="Int32" Nullable="false" />
+          <Property Name="Faculty_First_Name" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Faculty_Last_Name" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="Start_Datetime" Type="DateTime" Nullable="false" />
+          <Property Name="End_Datetime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dbuasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="courses" EntityType="Self.cours" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbuasModelStoreContainer" CdmEntityContainer="dbuasEntities">
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="dbuasModel.cours">
+              <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="Reporting_Term" ColumnName="Reporting Term" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Course_Name" ColumnName="Course Name" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Division_Desc" ColumnName="Division Desc" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Department_Description" ColumnName="Department Description" />
+                <ScalarProperty Name="Current_Status" ColumnName="Current Status" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="Start_Date" ColumnName="Start Date" />
+                <ScalarProperty Name="End_Date" ColumnName="End Date" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End Time" />
+                <ScalarProperty Name="Section_Capacity" ColumnName="Section Capacity" />
+                <ScalarProperty Name="Faculty_First_Name" ColumnName="Faculty First Name" />
+                <ScalarProperty Name="Faculty_Last_Name" ColumnName="Faculty Last Name" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Start_Datetime" ColumnName="Start Datetime" />
+                <ScalarProperty Name="End_Datetime" ColumnName="End Datetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -12,6 +12,7 @@ using DBU_Advising_Scheduler.Helpers;
 using DBU_Advising_Scheduler.TokenStorage;
 using System.Security.Claims;
 using System.Web;
+using System;
 
 namespace DBU_Advising_Scheduler
 {
@@ -79,7 +80,7 @@ namespace DBU_Advising_Scheduler
             return Task.FromResult(0);
         }
 
-        private async Task OnAuthorizationCodeReceivedAsync(AuthorizationCodeReceivedNotification notification)
+        public async Task OnAuthorizationCodeReceivedAsync(AuthorizationCodeReceivedNotification notification)
         {
             var idClient = ConfidentialClientApplicationBuilder.Create(appId)
                 .WithRedirectUri(redirectUri)

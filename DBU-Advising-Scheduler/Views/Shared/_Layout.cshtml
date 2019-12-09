@@ -21,7 +21,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            @Html.ActionLink("ASP.NET Graph Tutorial", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("DBU Advising Scheduler", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,10 +32,20 @@
                         @Html.ActionLink("Home", "Index", "Home", new { area = "" },
                             new { @class = ViewBag.Current == "Home" ? "nav-link active" : "nav-link" })
                     </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Courses", "Index", "Courses", new { area = "" },
+                            new { @class = ViewBag.Current == "Courses" ? "nav-link active" : "nav-link" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Degree Plan", "Index", "DegreePlan", new { area = "" },
+                            new { @class = ViewBag.Current == "Home" ? "nav-link active" : "nav-link" })
+                    </li>
+
                     @if (Request.IsAuthenticated)
                     {
                         <li class="nav-item" data-turbolinks="false">
-                            @Html.ActionLink("Calendar", "Index", "Calendar", new { area = "" },
+                            @Html.ActionLink("Schedule", "Index", "Calendar", new { area = "" },
                                 new { @class = ViewBag.Current == "Calendar" ? "nav-link active" : "nav-link" })
                         </li>
                     }

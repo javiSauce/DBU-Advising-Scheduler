@@ -1,0 +1,229 @@
+﻿@model DBU_Advising_Scheduler.Models.Degrees
+
+<html>
+
+<head>
+    <style>
+        .nav-link[data-toggle].collapsed:after {
+            content: "▾";
+        }
+
+        .nav-link[data-toggle]:not(.collapsed):after {
+            content: "▴";
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4 collapse show d-md-flex bg-white pt-2 pl-0 min-vh-100" id="sidebar">
+                <ul class="nav flex-column flex-nowrap overflow-hidden">
+                    <li class="nav-item">
+                        <a class="nav-link text-truncate" href="#"><i class="fa fa-home"></i> <span class="d-none d-sm-inline">Overview</span></a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="fa fa-table"></i> <span class="d-none d-sm-inline">Degrees</span></a>
+                        <div class="collapse" id="submenu1" aria-expanded="false">
+                            <ul class="flex-column pl-2 nav">
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1"><span>College of Business</span></a>
+                                    <div class="collapse" id="submenu1sub1" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfBusiness) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub2" data-toggle="collapse" data-target="#submenu1sub2"><span>College of Christian Faith</span></a>
+                                    <div class="collapse" id="submenu1sub2" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfChristianFaith) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub3" data-toggle="collapse" data-target="#submenu1sub3"><span>College of Education</span></a>
+                                    <div class="collapse" id="submenu1sub3" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfEducation) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub4" data-toggle="collapse" data-target="#submenu1sub4"><span>College of Fine Arts</span></a>
+                                    <div class="collapse" id="submenu1sub4" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfFineArts) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub5" data-toggle="collapse" data-target="#submenu1sub5"><span>College of Humanities and Social Sciences</span></a>
+                                    <div class="collapse" id="submenu1sub5" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfHumanitiesAndSS) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub6" data-toggle="collapse" data-target="#submenu1sub6"><span>College of Natural Sciences and Mathematics</span></a>
+                                    <div class="collapse" id="submenu1sub6" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfNaturalSciences) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub7" data-toggle="collapse" data-target="#submenu1sub7"><span>School of Leadership</span></a>
+                                    <div class="collapse" id="submenu1sub7" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.SchoolOfLeadership) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub8" data-toggle="collapse" data-target="#submenu1sub8"><span>College of Business and Graduate School of Business</span></a>
+                                    <div class="collapse" id="submenu1sub8" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.GradSchoolOfBusiness) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub9" data-toggle="collapse" data-target="#submenu1sub9"><span>College of Christian Faith and Graduate School of Ministry</span></a>
+                                    <div class="collapse" id="submenu1sub9" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.GraduateSchoolOfMinistry) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub10" data-toggle="collapse" data-target="#submenu1sub10"><span>College of Humanities</span></a>
+                                    <div class="collapse" id="submenu1sub10" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.CollegeOfHumanities) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub11" data-toggle="collapse" data-target="#submenu1sub11"><span>College of Natural Science and Mathematics Masters</span></a>
+                                    <div class="collapse" id="submenu1sub11" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.MastersOfNaturalScience) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link collapsed text-nowrap py-1" href="#submenu1sub12" data-toggle="collapse" data-target="#submenu1sub12"><span>Cook School of Leadership</span></a>
+                                    <div class="collapse" id="submenu1sub12" aria-expanded="false">
+
+                                        <ul class="flex-column nav pl-lg-1"
+                                            @foreach (var degree in Model.MastersSchoolOfLeadership) {<li class="nav-item">
+                                                    <a class="nav-link p-1 text-nowrap" href="#">
+                                                        <i class="fa fa-fw fa-clock-o"></i> @degree
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    @*<li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-bar-chart"></i> <span class="d-none d-sm-inline">Analytics</span></a></li>
+                    <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-download"></i> <span class="d-none d-sm-inline">Export</span></a></li>*@
+                </ul>
+            </div>
+            <div class="col pt-2">
+                <h2>
+                    <a href="" data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a> Content
+                </h2>
+                <h6 class="hidden-sm-down">Shrink page width to see sidebar collapse</h6>
+                <p>Codeply editor wolf moon retro jean shorts chambray sustainable roof party. Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo Park Godard kogi, next level irony ennui twee squid fap selvage. Meggings flannel Brooklyn literally small batch, mumblecore PBR try-hard kale chips. Brooklyn vinyl lumbersexual bicycle rights, viral fap cronut leggings squid chillwave pickled gentrify mustache. 3 wolf moon hashtag church-key Odd Future. Austin messenger bag normcore, Helvetica Williamsburg sartorial tote bag distillery Portland before they sold out gastropub taxidermy Vice.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
