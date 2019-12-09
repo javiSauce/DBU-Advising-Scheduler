@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
+using System;
 
 namespace DBU_Advising_Scheduler.Helpers
 {
@@ -19,19 +20,7 @@ namespace DBU_Advising_Scheduler.Helpers
         private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
         private static string graphScopes = ConfigurationManager.AppSettings["ida:AppScopes"];
 
-        public static async Task<IEnumerable<Event>> GetEventsAsync()
-        {
-            var graphClient = GetAuthenticatedClient();
-
-            var events = await graphClient.Me.Events.Request()
-                .Select("subject,organizer,start,end")
-                .OrderBy("createdDateTime DESC")
-                .GetAsync();
-
-            return events.CurrentPage;
-        }
-
-        private static GraphServiceClient GetAuthenticatedClient()
+        public static GraphServiceClient GetAuthenticatedClient()
         {
             return new GraphServiceClient(
                 new DelegateAuthenticationProvider(
@@ -69,6 +58,46 @@ namespace DBU_Advising_Scheduler.Helpers
                     }));
 
             return await graphClient.Me.Request().GetAsync();
+        }
+
+        public static async Task<string> GetCoursesCalendarId()
+        {
+            GraphServiceClient graphClient = GraphHelper.GetAuthenticatedClient();
+
+            // Get all calendars
+            var calendars = await graphClient.Me.Calendars
+                                .Request()
+                                .GetAsync();
+
+
+            // Find courses calendar if exists
+            bool found = false;
+            string id = "";
+
+            foreach (var c in calendars)
+            {
+                if (c.Name == "Courses")
+                {
+                    found = true;
+                    id = c.Id;
+                }
+            }
+
+            // If not found, create calendar
+            if (!found)
+            {
+                var calendar = new Calendar
+                {
+                    Name = "Courses"
+                };
+                var cal = await graphClient.Me.Calendars
+                    .Request()
+                    .AddAsync(calendar);
+
+                id = cal.Id;
+            }
+
+            return id;
         }
     }
 }

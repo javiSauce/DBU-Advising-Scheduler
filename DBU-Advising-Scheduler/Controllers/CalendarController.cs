@@ -1,5 +1,8 @@
 ﻿using DBU_Advising_Scheduler.Helpers;
+using Microsoft.Graph;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -11,7 +14,15 @@ namespace DBU_Advising_Scheduler.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var events = await GraphHelper.GetEventsAsync();
+
+            var graphClient = GraphHelper.GetAuthenticatedClient();
+
+            string id = await GraphHelper.GetCoursesCalendarId();
+
+            var events = await graphClient.Me.Calendars[id].Events.Request()
+                            //.Select("subject,organizer,start,end")
+                            .OrderBy("createdDateTime DESC")
+                            .GetAsync();
 
             // Change start and end dates from UTC to local time
             foreach (var ev in events)
@@ -23,6 +34,148 @@ namespace DBU_Advising_Scheduler.Controllers
             }
 
             return View(events);
+        }
+        [HttpPost]
+        public async Task<ActionResult> DeleteEvents(FormCollection form)
+        {
+            string[] eventIds = String.IsNullOrEmpty(form["eventIds"].ToString()) ? null : form["eventIds"].ToString().Substring(1).Split(',');
+
+            if (eventIds != null)
+            {
+                GraphServiceClient graphClient = GraphHelper.GetAuthenticatedClient();
+                foreach (var id in eventIds)
+                {
+                    await graphClient.Me.Events[id]
+                        .Request()
+                        .DeleteAsync();
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddEvents(FormCollection form)
+        {
+            dynamic courseList = JsonConvert.DeserializeObject(form[0]);
+
+            IList<Event> events = new List<Event>();
+
+            foreach (var course in courseList)
+            {
+                string[] d = course.Days.ToString().Split(' ');
+                List<Microsoft.Graph.DayOfWeek> days = new List<Microsoft.Graph.DayOfWeek>();
+                if (Array.Exists(d, e => e == "M"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Monday);
+                }
+                if (Array.Exists(d, e => e == "T"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Tuesday);
+                }
+                if (Array.Exists(d, e => e == "W"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Wednesday);
+                }
+                if (Array.Exists(d, e => e == "Th"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Thursday);
+                }
+                if (Array.Exists(d, e => e == "F"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Friday);
+                }
+                if (Array.Exists(d, e => e == "S"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Saturday);
+                }
+                if (Array.Exists(d, e => e == "Su"))
+                {
+                    days.Add(Microsoft.Graph.DayOfWeek.Sunday);
+                }
+
+                string sd = course.Start_Date.ToString();
+                int sdMonth = Int32.Parse(sd.Split('/')[0]);
+                int sdDay = Int32.Parse(sd.Split('/')[1]);
+                int sdYear = Int32.Parse(sd.Split('/')[2].Remove(sd.Split('/')[2].IndexOf(" ")));
+
+                string ed = course.End_Date.ToString();
+                int edMonth = Int32.Parse(ed.Split('/')[0]);
+                int edDay = Int32.Parse(ed.Split('/')[1]);
+                int edYear = Int32.Parse(ed.Split('/')[2].Remove(ed.Split('/')[2].IndexOf(" ")));
+
+                string endDate = sd.Remove(sd.IndexOf(" ")) + ed.Substring(ed.IndexOf(" "));
+
+                var @event = new Event
+                {
+                    Subject = course.Department.ToString() + "*" + course.Course.ToString()
+                                + "*" + course.Section.ToString() + " - " + course.Title.ToString(),//"CRJS*3302*A1H1 - Juvenile Delinquency",
+                    Body = new ItemBody
+                    {
+                        ContentType = BodyType.Text,
+                        Content = course.Notes.ToString() //"CRJS 1301 or 1302 or PSYC or SOCI 1301; Classroom Aug. 10, 17 & online"
+                    },
+                    Start = new DateTimeTimeZone
+                    {
+                        DateTime = sd, //"2019-08-10 08:00:00",
+                        TimeZone = "Central Standard Time"
+                    },
+                    End = new DateTimeTimeZone
+                    {
+                        DateTime = endDate, //"2019-08-10 17:00:00",
+                        TimeZone = "Central Standard Time"
+                    },
+                    Recurrence = new PatternedRecurrence
+                    {
+                        Pattern = new RecurrencePattern
+                        {
+                            Type = RecurrencePatternType.Weekly,
+                            Interval = 1,
+                            DaysOfWeek = days
+                        },
+                        Range = new RecurrenceRange
+                        {
+                            Type = RecurrenceRangeType.EndDate,
+                            StartDate = new Date(sdYear, sdMonth, sdDay),
+                            EndDate = new Date(edYear, edMonth, edDay)
+                        }
+                    },
+                    Location = new Location
+                    {
+                        DisplayName = course.Building.ToString() + " " + course.Room.ToString() //"COLN 312"
+                    },
+                    Attendees = new List<Attendee>()
+                    {
+                        new Attendee
+                        {
+                            EmailAddress = new EmailAddress
+                            {
+                                Address = "none",
+                                Name = course.Faculty_First_Name.ToString() + " " +
+                                        course.Faculty_Last_Name.ToString() //"Jean Humphreys"
+                            },
+                            Type = AttendeeType.Resource
+                        }
+                    },
+                    Categories = new List<String>()
+                    {
+                        { course.Location.ToString() } //"HYBRD" }
+                    }
+                };
+
+                events.Add(@event);
+            }
+            GraphServiceClient graphClient = GraphHelper.GetAuthenticatedClient();
+
+            string id = await GraphHelper.GetCoursesCalendarId();
+
+            foreach (var ev in events)
+            {
+                await graphClient.Me.Calendars[id].Events
+                    .Request()
+                    .AddAsync(ev);
+            }
+
+            return RedirectToAction("Index","Courses",new { area = "" });
         }
     }
 }
