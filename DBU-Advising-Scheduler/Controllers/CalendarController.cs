@@ -76,7 +76,7 @@ namespace DBU_Advising_Scheduler.Controllers
                 {
                     days.Add(Microsoft.Graph.DayOfWeek.Wednesday);
                 }
-                if (Array.Exists(d, e => e == "Th"))
+                if (Array.Exists(d, e => e == "TH"))
                 {
                     days.Add(Microsoft.Graph.DayOfWeek.Thursday);
                 }
