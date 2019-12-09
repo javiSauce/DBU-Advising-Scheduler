@@ -15,6 +15,9 @@ namespace DBU_Advising_Scheduler.Helpers
         private static string degreePlanUrl = "https://www2.dbu.edu/orientation-guidebook-degree-plans/";
         private static async Task<string> GetDegreeHTML()
         {
+
+            //HtmlWeb httpClient = new HtmlWeb();
+            //HtmlDocument htmlDocument = await Task.Run(() => httpClient.Load(degreePlanUrl));
             var httpClient = new HttpClient();
             var html = await httpClient.GetStringAsync(degreePlanUrl);
 
