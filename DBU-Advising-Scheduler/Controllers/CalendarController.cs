@@ -62,6 +62,7 @@ namespace DBU_Advising_Scheduler.Controllers
 
             foreach (var course in courseList)
             {
+                // create list for days
                 string[] d = course.Days.ToString().Split(' ');
                 List<Microsoft.Graph.DayOfWeek> days = new List<Microsoft.Graph.DayOfWeek>();
                 if (Array.Exists(d, e => e == "M"))
@@ -88,11 +89,12 @@ namespace DBU_Advising_Scheduler.Controllers
                 {
                     days.Add(Microsoft.Graph.DayOfWeek.Saturday);
                 }
-                if (Array.Exists(d, e => e == "Su"))
+                if (Array.Exists(d, e => e == "Su") || d[0] == "")
                 {
                     days.Add(Microsoft.Graph.DayOfWeek.Sunday);
                 }
 
+                // get dates and times separated
                 string sd = course.Start_Date.ToString();
                 int sdMonth = Int32.Parse(sd.Split('/')[0]);
                 int sdDay = Int32.Parse(sd.Split('/')[1]);
@@ -104,6 +106,14 @@ namespace DBU_Advising_Scheduler.Controllers
                 int edYear = Int32.Parse(ed.Split('/')[2].Remove(ed.Split('/')[2].IndexOf(" ")));
 
                 string endDate = sd.Remove(sd.IndexOf(" ")) + ed.Substring(ed.IndexOf(" "));
+
+                // deal with empty strings
+                string building = "", room = "";
+                if (String.IsNullOrEmpty(course.Building.ToString()))
+                {
+                    building = course.Building.ToString();
+                    room = course.Room.ToString();
+                }
 
                 var @event = new Event
                 {
@@ -141,7 +151,7 @@ namespace DBU_Advising_Scheduler.Controllers
                     },
                     Location = new Location
                     {
-                        DisplayName = course.Building.ToString() + " " + course.Room.ToString() //"COLN 312"
+                        DisplayName = building + " - " + room //"COLN 312"
                     },
                     Attendees = new List<Attendee>()
                     {
