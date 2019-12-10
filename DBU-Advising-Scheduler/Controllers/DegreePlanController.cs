@@ -22,15 +22,25 @@ namespace DBU_Advising_Scheduler.Controllers
             return View();
         }
 
+        //public ActionResult Degree()
+        //{
+        //    //var degreePlan = new DegreeScraper();
+        //    //var result = await degreePlan.GetDegreeTable("BS Philosophy");
+        //    //var degreePlan = DegreeScraper.GetDegreeTable("BS Philosophy");
+        //    //var result =  await DegreeScraper.GetDegreeTable("BS Philosophy");
+
+        //    //ViewBag.DegreePlan = result;
+
+        //    var result  = GetTable("BS Philosophy").Result;
+        //    return Content(result);
+        //}
+
         public async Task<ActionResult> Degree()
         {
-            //var degreePlan = DegreeScraper.GetDegreeTable("BS Philosophy");
-            var result =  await DegreeScraper.GetDegreeTable("BS Philosophy");
+            var plan = new DegreeScraper();
+            var result = await plan.GetDegreeTable("BS Philosophy");
 
-            //ViewBag.DegreePlan = result;
-
-            System.Diagnostics.Debug.WriteLine(result);
-            return View(result);
+            return Content(result);
         }
 
         public ActionResult SideMenu()

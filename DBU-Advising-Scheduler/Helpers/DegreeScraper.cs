@@ -10,26 +10,48 @@ using HtmlAgilityPack;
 
 namespace DBU_Advising_Scheduler.Helpers
 {
-    public static class DegreeScraper
+    public class DegreeScraper
     {
-        private static string degreePlanUrl = "https://www2.dbu.edu/orientation-guidebook-degree-plans/";
-        private static async Task<string> GetDegreeHTML()
+        private async Task<string> GetDegreeHTML()
         {
 
             //HtmlWeb httpClient = new HtmlWeb();
             //HtmlDocument htmlDocument = await Task.Run(() => httpClient.Load(degreePlanUrl));
+
+            //string degreePlanUrl = "https://www2.dbu.edu/orientation-guidebook-degree-plans/";
+
+            var url = new Uri("https://www2.dbu.edu/orientation-guidebook-degree-plans/");
             var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(degreePlanUrl);
 
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
-            var degrees = htmlDocument.DocumentNode.SelectSingleNode("//*[@id=\"degrees\"]");
+            try
+            {
+                var html = await httpClient.GetStringAsync(url);
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
+                var degrees = htmlDocument.DocumentNode.SelectSingleNode("//*[@id=\"degrees\"]");
 
-            return degrees.OuterHtml;
+                return degrees.OuterHtml;
+            }
+            catch (Exception e)
+            {
+                string checkResult = "Error " + e.ToString();
+                httpClient.Dispose();
+                return checkResult;
+            }
+
+            //var html = httpClient.GetStringAsync(degreePlanUrl);
+
+            //var htmlDocument = new HtmlDocument();
+            //htmlDocument.LoadHtml(html);
+            //var degrees = htmlDocument.DocumentNode.SelectSingleNode("//*[@id=\"degrees\"]");
+
+            //return degrees.OuterHtml;
         }
 
-        public static async Task<string> GetDegreeTable(string degree)
+        public async Task<string> GetDegreeTable(string degree)
         {
+
+            string degreePlanUrl = "https://www2.dbu.edu/orientation-guidebook-degree-plans/";
             var html = await GetDegreeHTML();
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
@@ -54,34 +76,69 @@ namespace DBU_Advising_Scheduler.Helpers
 
             return table;
         }
-        private static async Task<string> GenerateTable(string url)
+        private async Task<string> GenerateTable(string url)
         {
-            string degreeUrl = url;
+            //string degreeUrl = url;
 
+            //var httpClient = new HttpClient();
+            //var html = await httpClient.GetStringAsync(url);
+
+            //var htmlDocument = new HtmlDocument();
+            //htmlDocument.LoadHtml(html);
+
+            var degreePlanUrl = new Uri(url);
             var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(url);
 
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
-
-            var plan = new HtmlDocument();
-
-            StringBuilder tables = new StringBuilder();
-
-            foreach (HtmlNode table in htmlDocument.DocumentNode.SelectNodes("//table"))
+            try
             {
-                HtmlNode individualTable = HtmlNode.CreateNode(table.OuterHtml);
-                tables.Append(individualTable.OuterHtml);
-            }
+                var html = await httpClient.GetStringAsync(degreePlanUrl);
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
 
-            string tableString = String.Format(@"<html>
+                var plan = new HtmlDocument();
+
+                StringBuilder tables = new StringBuilder();
+
+                foreach (HtmlNode table in htmlDocument.DocumentNode.SelectNodes("//table"))
+                {
+                    HtmlNode individualTable = HtmlNode.CreateNode(table.OuterHtml);
+                    tables.Append(individualTable.OuterHtml);
+                }
+
+                string tableString = String.Format(@"<html>
                                                  <head>
                                                  </head>
                                                  <body><div>{0}</div></body>
                                                  </html>", tables.ToString());
 
-            plan.LoadHtml(tableString);
-            return plan.DocumentNode.OuterHtml;
+                plan.LoadHtml(tableString);
+                return plan.DocumentNode.OuterHtml;
+            }
+            catch (Exception e)
+            {
+                string checkResult = "Error " + e.ToString();
+                httpClient.Dispose();
+                return checkResult;
+            }
+
+            //var plan = new HtmlDocument();
+
+            //StringBuilder tables = new StringBuilder();
+
+            //foreach (HtmlNode table in htmlDocument.DocumentNode.SelectNodes("//table"))
+            //{
+            //    HtmlNode individualTable = HtmlNode.CreateNode(table.OuterHtml);
+            //    tables.Append(individualTable.OuterHtml);
+            //}
+
+            //string tableString = String.Format(@"<html>
+            //                                     <head>
+            //                                     </head>
+            //                                     <body><div>{0}</div></body>
+            //                                     </html>", tables.ToString());
+
+            //plan.LoadHtml(tableString);
+            //return plan.DocumentNode.OuterHtml;
         }
     }
 }
