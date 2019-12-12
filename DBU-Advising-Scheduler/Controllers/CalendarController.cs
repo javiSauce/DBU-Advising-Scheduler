@@ -56,6 +56,8 @@ namespace DBU_Advising_Scheduler.Controllers
         [HttpPost]
         public async Task<ActionResult> AddEvents(FormCollection form)
         {
+            GraphServiceClient graphClient = GraphHelper.GetAuthenticatedClient();
+
             dynamic courseList = JsonConvert.DeserializeObject(form[0]);
 
             IList<Event> events = new List<Event>();
@@ -96,20 +98,23 @@ namespace DBU_Advising_Scheduler.Controllers
 
                 // get dates and times separated
                 string sd = course.Start_Date.ToString();
+                string st = course.Start_Time.ToString() == " - " ? "00:00:00" : course.Start_Time.ToString();
                 int sdMonth = Int32.Parse(sd.Split('/')[0]);
                 int sdDay = Int32.Parse(sd.Split('/')[1]);
-                int sdYear = Int32.Parse(sd.Split('/')[2].Remove(sd.Split('/')[2].IndexOf(" ")));
+                int sdYear = Int32.Parse(sd.Split('/')[2]);
 
                 string ed = course.End_Date.ToString();
+                string et = course.End_Time.ToString() == " - " ? "00:00:00" : course.End_Time.ToString();
                 int edMonth = Int32.Parse(ed.Split('/')[0]);
                 int edDay = Int32.Parse(ed.Split('/')[1]);
-                int edYear = Int32.Parse(ed.Split('/')[2].Remove(ed.Split('/')[2].IndexOf(" ")));
+                int edYear = Int32.Parse(ed.Split('/')[2]);
 
-                string endDate = sd.Remove(sd.IndexOf(" ")) + ed.Substring(ed.IndexOf(" "));
+                string startDt = sd + " " + st;
+                string endDt = sd + " " + et;
 
                 // deal with empty strings
                 string building = "", room = "";
-                if (String.IsNullOrEmpty(course.Building.ToString()))
+                if (!String.IsNullOrEmpty(course.Building.ToString()))
                 {
                     building = course.Building.ToString();
                     room = course.Room.ToString();
@@ -126,12 +131,12 @@ namespace DBU_Advising_Scheduler.Controllers
                     },
                     Start = new DateTimeTimeZone
                     {
-                        DateTime = sd, //"2019-08-10 08:00:00",
+                        DateTime = startDt, //"2019-08-10 08:00:00",
                         TimeZone = "Central Standard Time"
                     },
                     End = new DateTimeTimeZone
                     {
-                        DateTime = endDate, //"2019-08-10 17:00:00",
+                        DateTime = endDt, //"2019-08-10 17:00:00",
                         TimeZone = "Central Standard Time"
                     },
                     Recurrence = new PatternedRecurrence
@@ -151,30 +156,29 @@ namespace DBU_Advising_Scheduler.Controllers
                     },
                     Location = new Location
                     {
-                        DisplayName = building + " - " + room //"COLN 312"
+                        DisplayName = building + " " + room //"COLN 312"
                     },
                     Attendees = new List<Attendee>()
+                {
+                    new Attendee
                     {
-                        new Attendee
+                        EmailAddress = new EmailAddress
                         {
-                            EmailAddress = new EmailAddress
-                            {
-                                Address = "none",
-                                Name = course.Faculty_First_Name.ToString() + " " +
-                                        course.Faculty_Last_Name.ToString() //"Jean Humphreys"
-                            },
-                            Type = AttendeeType.Resource
-                        }
-                    },
-                    Categories = new List<String>()
-                    {
-                        { course.Location.ToString() } //"HYBRD" }
+                            Address = "none",
+                            Name = course.Faculty_First_Name.ToString() + " " +
+                                    course.Faculty_Last_Name.ToString() //"Jean Humphreys"
+                        },
+                        Type = AttendeeType.Resource
                     }
+                },
+                    Categories = new List<String>()
+                {
+                    { course.Location.ToString() } //"HYBRD" }
+                }
                 };
 
                 events.Add(@event);
             }
-            GraphServiceClient graphClient = GraphHelper.GetAuthenticatedClient();
 
             string id = await GraphHelper.GetCoursesCalendarId();
 
@@ -184,8 +188,7 @@ namespace DBU_Advising_Scheduler.Controllers
                     .Request()
                     .AddAsync(ev);
             }
-
-            return RedirectToAction("Index","Courses",new { area = "" });
+            return RedirectToAction("Index", "Courses", new { area = "" });
         }
     }
 }

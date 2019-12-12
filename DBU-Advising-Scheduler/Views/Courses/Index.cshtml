@@ -98,38 +98,56 @@
             $(this).toggle(showCurrentTr);
         });
     });
-
-
-    function addEvents() {
-        $("[name='selectedRows']").val("");
-        var courses = $('.selected').map(function () {
-            var obj = new Object();
-            obj.Title = $(this).children().eq(0).text();
-            obj.Department = $(this).children().eq(1).text();
-            obj.Course = $(this).children().eq(2).text();
-            obj.Section = $(this).children().eq(3).text();
-            obj.Building = $(this).children().eq(4).text();
-            obj.Room = $(this).children().eq(5).text();
-            obj.Location = $(this).children().eq(6).text();
-            obj.Start_Date = $(this).children().eq(7).text();
-            obj.End_Date = $(this).children().eq(8).text();
-            obj.Start_Time = $(this).children().eq(9).text();
-            obj.End_Time = $(this).children().eq(10).text();
-            obj.Days = $(this).children().eq(11).text();
-            obj.Faculty_First_Name = $(this).children().eq(12).text();
-            obj.Faculty_Last_Name = $(this).children().eq(13).text();
-            obj.Notes = $(this).children().eq(14).text();
-
-            return obj;
-        });
-
-        var s = "{\"courses\":" + JSON.stringify(courses).replace("{", "[");
-        s = JSON.stringify(courses).replace("{", "[")
-        s = s.slice(0, s.indexOf(",\"length\"")) + "]";
-        s = s.replace(/\"\d\":/g, "");
-
-        $("[name='selectedRows']").val(s);
-
-        $("#addForm").submit();
-    }
 </script>
+
+@if (Request.IsAuthenticated)
+{
+    <script type="text/javascript">
+        function addEvents() {
+            $("[name='selectedRows']").val("");
+            var courses = $('.selected').map(function () {
+                var obj = new Object();
+                obj.Title = $(this).children().eq(0).text();
+                obj.Department = $(this).children().eq(1).text();
+                obj.Course = $(this).children().eq(2).text();
+                obj.Section = $(this).children().eq(3).text();
+                obj.Building = $(this).children().eq(4).text();
+                obj.Room = $(this).children().eq(5).text();
+                obj.Location = $(this).children().eq(6).text();
+                obj.Start_Date = $(this).children().eq(7).text();
+                obj.End_Date = $(this).children().eq(8).text();
+                obj.Start_Time = $(this).children().eq(9).text();
+                obj.End_Time = $(this).children().eq(10).text();
+                obj.Days = $(this).children().eq(11).text();
+                obj.Faculty_First_Name = $(this).children().eq(12).text();
+                obj.Faculty_Last_Name = $(this).children().eq(13).text();
+                obj.Notes = $(this).children().eq(14).text();
+
+                return obj;
+            });
+
+            if (courses.length > 0) {
+
+                var s = "{\"courses\":" + JSON.stringify(courses).replace("{", "[");
+                s = JSON.stringify(courses).replace("{", "[")
+                s = s.slice(0, s.indexOf(",\"length\"")) + "]";
+                s = s.replace(/\"\d\":/g, "");
+
+                $("[name='selectedRows']").val(s);
+
+                $("#addForm").submit();
+            }
+            else {
+                alert("Select some courses to add.")
+            }
+        }
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        function addEvents() {
+            alert("Login to add courses to your schedule.");
+        }
+    </script>
+}

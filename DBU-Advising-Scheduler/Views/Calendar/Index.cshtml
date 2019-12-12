@@ -5,6 +5,7 @@
 }
 
 <h1>Calendar</h1>
+<a href="https://outlook.office.com/calendar/view/workweek"><input type="button" value="Click here to view in Outlook" /></a>
 <table class="table">
     <thead>
         <tr class="header">
@@ -58,6 +59,9 @@
 </table>
 <input type="button" value="Delete" onclick="deleteEvents()" />
 <input type="button" value="Delete All" onclick="deleteAllEvents()" />
+
+<iframe src="https://outlook.office.com/calendar/view/workweek"></iframe>
+
 
 @using (Html.BeginForm("DeleteEvents", "Calendar", FormMethod.Post, new { id = "deleteForm" }))
 {
