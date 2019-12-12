@@ -24,3 +24,9 @@ tr:not(.selected):not(.header):hover {
 .hidden {
     display: none;
 }
+
+iframe {
+    margin-top:15px;
+    width:100%;
+    height:1000px;
+}
