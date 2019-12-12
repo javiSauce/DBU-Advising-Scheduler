@@ -1,12 +1,8 @@
 ﻿
 @{
     Html.RenderAction("SideMenu");
-    @Html.Raw(ViewBag.plan);
-
+    Html.Raw(ViewBag.plan);
 }
-
-
-
 
 <input style="float:right; margin-right:50px;" type="button" value="Add Courses" onclick="addCompletedCourse()" />
 
