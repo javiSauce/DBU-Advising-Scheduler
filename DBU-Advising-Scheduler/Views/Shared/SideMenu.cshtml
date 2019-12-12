@@ -222,7 +222,6 @@
                 //var degree = encodeURIComponent($(this).text().trim());
                 var degree = encodeURIComponent($(this).text().trim());
                 $.ajax({
-                    @*url: "@(Url.Action("RunScript", "DegreePlanController"))",*@
                     url: "@(Url.Action("Degree", "DegreePlan"))",
                     data: {args : degree},
                     success: function (response) {

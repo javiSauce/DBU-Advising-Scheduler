@@ -21,6 +21,9 @@ namespace DBU_Advising_Scheduler.Controllers
 
     public class DegreePlanController : BaseController
     {
+
+        
+        
         private DBU_Advising_Scheduler.Models.dbuasEntities2 db = new DBU_Advising_Scheduler.Models.dbuasEntities2();
 
 
@@ -59,8 +62,22 @@ namespace DBU_Advising_Scheduler.Controllers
             return PartialView(degrees);
         }
 
-        public ActionResult CoursesCompleted(string entry)
+
+        [HttpPost]
+        public ActionResult CoursesCompleted(string course)
         {
+            //completedcours ct= new completedcours(); 
+            //ct.DisplayName = "Daniel M";
+            //ct.Email = "nacdan97@gmail.com";
+            //ct.Courses = course;
+
+            //db.completedcourses.Add(ct);
+            //db.SaveChanges();
+
+            completedcours ccourse = new completedcours();
+
+            //insert.Add(new completedcours { DisplayName = "Daniel M.", Email = "dmtx97@gmail.com", Courses = courses });
+
             if (Request.IsAuthenticated)
             {
                 // Get the user's token cache
@@ -73,18 +90,17 @@ namespace DBU_Advising_Scheduler.Controllers
                     var info = tokenStore.GetUserDetails();
 
                     var insert = db.Set<completedcours>();
-                    insert.Add(new completedcours { DisplayName = info.DisplayName, Email = info.Email, Courses = entry });
+                    insert.Add(new completedcours { DisplayName = info.DisplayName, Email = info.Email, Courses = course });
                     db.SaveChanges();
                 }
             }
 
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //else
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
 
             return RedirectToAction("Index", "Calendar");
-
         }
     }
 }

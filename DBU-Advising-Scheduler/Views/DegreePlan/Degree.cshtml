@@ -5,7 +5,10 @@
 
 }
 
-<input type="button" value="Add Courses" onclick="addCompletedCourse()" />
+
+
+
+<input style="float:right; margin-right:50px;" type="button" value="Add Courses" onclick="addCompletedCourse()" />
 
 <style>
     body {
@@ -94,10 +97,11 @@
         console.log(completedc.toString());
         var entry = completedc.toString();
 
+        var e = encodeURIComponent($(this).text().trim());
+
         $.ajax({
-            @*url: "@(Url.Action("RunScript", "DegreePlanController"))",*@
             url: "@(Url.Action("CoursesCompleted", "DegreePlan"))",
-            data: { courses : entry },
+            data: { courses : e },
         });
     }
 </script>
