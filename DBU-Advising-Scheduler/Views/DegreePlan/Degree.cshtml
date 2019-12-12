@@ -1,6 +1,103 @@
 ﻿
 @{
     Html.RenderAction("SideMenu");
+    @Html.Raw(ViewBag.plan);
+
 }
 
+<input type="button" value="Add Courses" onclick="addCompletedCourse()" />
 
+<style>
+    body {
+        padding-top: 4.5rem;
+    }
+
+    .alert-pre {
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+
+    .jumbotron {
+        padding: 1rem;
+    }
+
+    td.course:not(.is-selected):hover {
+        background: #d3d0d0;
+    }
+
+    .is-selected {
+        background: #ca6f5f;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    table {
+        border: 1px solid black;
+        margin-left: auto;
+        table-layout: fixed;
+        width: 70%;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        width: 100%;
+        overflow: hidden;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    var table = document.getElementsByTagName("tbody");
+
+    for (var i = 0; i < table.length - 1; i++) {
+
+        var currentTable = table[i];
+        var rows = currentTable.getElementsByTagName("tr");
+
+        for (var j = 3; j < rows.length - 1; j++) {
+
+            var c = rows[j].cells;
+            c[0].className = "course";
+            c[3].className = "course";
+        }
+    }
+
+    $('td:nth-child(1)').click(function () {
+        $(this).parent().find('td:nth-child(1)');
+    });
+
+    $('td:nth-child(4)').click(function () {
+        $(this).parent().find('td:nth-child(4)');
+    });
+
+    $(".course").click(function () {
+        $(this).toggleClass("is-selected");
+    });
+
+    function addCompletedCourse() {
+
+        var completed = $(".is-selected").map(function () { return ($.trim($(this).text())) });
+
+        var cc = completed.toArray();
+
+
+        var completedc = cc.filter(function (el) {
+            return el != "";
+        });
+
+        console.log(completedc.toString());
+        var entry = completedc.toString();
+
+        $.ajax({
+            @*url: "@(Url.Action("RunScript", "DegreePlanController"))",*@
+            url: "@(Url.Action("CoursesCompleted", "DegreePlan"))",
+            data: { courses : entry },
+        });
+    }
+</script>

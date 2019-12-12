@@ -202,6 +202,24 @@
     <Compile Include="Helpers\DegreeScraper.cs" />
     <Compile Include="Helpers\GraphHelper.cs" />
     <Compile Include="Models\Alert.cs" />
+    <Compile Include="Models\completedcours.cs">
+      <DependentUpon>CompletedCourse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompletedCourse.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompletedCourse.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompletedCourse.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompletedCourse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompletedCourse.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompletedCourse.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\cours.cs">
       <DependentUpon>Courses.tt</DependentUpon>
     </Compile>
@@ -235,6 +253,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\CompletedCourse.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CompletedCourse.edmx</DependentUpon>
+      <LastGenOutput>CompletedCourse.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CompletedCourse.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CompletedCourse.edmx</DependentUpon>
+      <LastGenOutput>CompletedCourse.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Courses.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Courses.edmx</DependentUpon>
@@ -277,6 +305,13 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\CompletedCourse.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CompletedCourse.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CompletedCourse.edmx.diagram">
+      <DependentUpon>CompletedCourse.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
