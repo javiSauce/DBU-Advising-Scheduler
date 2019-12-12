@@ -36,8 +36,8 @@
 
                     string notes = @item.Body.Content.ToString();
                     int start = notes.IndexOf("PlainText") + 11;
-                    int len = notes.IndexOf("</div>",start) - start;
-                    notes = notes.Substring(start,len);
+                    int len = notes.IndexOf("</div>", start) - start;
+                    notes = notes.Substring(start, len);
 
                     string st = Convert.ToDateTime(item.Start.DateTime).ToString("h:mm tt") == "12:00 AM" ? "" : Convert.ToDateTime(item.Start.DateTime).ToString("h:mm tt");
                     string et = Convert.ToDateTime(item.End.DateTime).ToString("h:mm tt") == "12:00 AM" ? "" : Convert.ToDateTime(item.End.DateTime).ToString("h:mm tt");
@@ -59,9 +59,9 @@
 <input type="button" value="Delete" onclick="deleteEvents()" />
 <input type="button" value="Delete All" onclick="deleteAllEvents()" />
 
-@using (Html.BeginForm("DeleteEvents", "Calendar", FormMethod.Post,new { id="deleteForm" }))
+@using (Html.BeginForm("DeleteEvents", "Calendar", FormMethod.Post, new { id = "deleteForm" }))
 {
-    @Html.TextBox("eventIds");
+    @Html.Hidden("eventIds");
 }
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -73,7 +73,7 @@
     function deleteEvents() {
         $("[name='eventIds']").val('');
         $('.selected > .hidden').each(function () {
-            $("[name='eventIds']").val($("[name='eventIds']").val() + ','+ $(this).text());
+            $("[name='eventIds']").val($("[name='eventIds']").val() + ',' + $(this).text());
         });
 
         $("#deleteForm").submit();
@@ -82,7 +82,7 @@
     function deleteAllEvents() {
         $("[name='eventIds']").val('');
         $('tr > .hidden').each(function () {
-            $("[name='eventIds']").val($("[name='eventIds']").val() + ','+ $(this).text());
+            $("[name='eventIds']").val($("[name='eventIds']").val() + ',' + $(this).text());
         });
 
         $("#deleteForm").submit();
